@@ -1,0 +1,15 @@
+security:
+  user:
+    password: password
+  oauth2:
+    client:
+      accessTokenUri: http://localhost:9999/uaa/oauth/token
+      userAuthorizationUri: http://localhost:9999/uaa/oauth/authorize
+      clientId: client-id
+      clientSecret: client-secret
+    resource:
+      userInfoUri: http://localhost:9999/uaa/user
+spring:
+  resources:
+    chain:
+      enabled: true

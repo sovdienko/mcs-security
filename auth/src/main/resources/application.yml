@@ -1,0 +1,18 @@
+server:
+  port: 9999
+  context-path: /uaa
+
+security:
+  user:
+    password: password
+  oauth2:
+    client:
+      client-id: client-id
+      client-secret: client-secret
+      grant-type: authorization_code, client_credentials, password, refresh_token
+      scope: cs.write, cs.read
+      auto-approve-scopes: ".*"
+
+
+
+

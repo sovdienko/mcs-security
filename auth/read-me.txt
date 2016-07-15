@@ -1,0 +1,54 @@
+======================================================================
+!!! Get access token using grant_type = password
+POST
+http://localhost:8080/oauth/token?grant_type=password&username=user&password=password
+
+{
+  "access_token": "065d8789-0771-4108-b42a-bba78a073eca",
+  "token_type": "bearer",
+  "refresh_token": "51e7433a-51a8-49a8-b08d-7903cdea08bb",
+  "expires_in": 43199,
+  "scope": "write_cs"
+}
+
+======================================================================
+!!! Get access token using grant_type = client_credentials
+POST
+http://client-id:client-secret@localhost:8080/oauth/token?grant_type=client_credentials
+
+or set header Authorization:Basic Y2xpZW50LWlkOmNsaWVudC1zZWNyZXQ=
+
+
+{
+  "access_token": "c55be20a-2392-471b-ace0-431f9dbb3ea6",
+  "token_type": "bearer",
+  "expires_in": 43044,
+  "scope": "write_cs"
+}
+
+======================================================================
+!!! Get access token using grant_type = code
+GET
+http://user:password@localhost:9999/uaa/oauth/authorize?response_type=code&client_id=client-id&redirect_uri=http://example.com
+
+or set header Authorization:Basic dXNlcjowN2Q0ZTU4OC1jZWJjLTRkNDgtODI1YS1jNmFiYzEwZjJkY2Y=
+
+after choose Approve and push Authorize
+
+http://example.com/?code=VP5mQo
+
+!!! Get access token using grant_type = authorization_code
+POST
+http://client-id:client-secret@localhost:9999/uaa/oauth/token?grant_type=authorization_code&client_id=client-id&redirect_uri=http://example.com&code=CfJFMY
+
+or set header Authorization:Basic Y2xpZW50LWlkOmNsaWVudC1zZWNyZXQ=
+
+{
+  "access_token": "6375627c-58c5-47f5-b798-9cc5e3ef206a",
+  "token_type": "bearer",
+  "refresh_token": "2ce04e7f-34dd-452e-afe1-849da9fc7d1f",
+  "expires_in": 43199,
+  "scope": "write_cs"
+}
+
+======================================================================
