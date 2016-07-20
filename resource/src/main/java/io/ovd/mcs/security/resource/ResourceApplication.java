@@ -10,37 +10,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-@RestController
-@EnableResourceServer
 public class ResourceApplication {
-
-	@RequestMapping("/")
-	public Message home() {
-		return new Message("Hello World");
-	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(ResourceApplication.class, args);
 	}
 
-}
 
-class Message {
-	private String id = UUID.randomUUID().toString();
-	private String content;
+	/**
+	 * An opinionated WebApplicationInitializer to run a SpringApplication from a traditional WAR deployment.
+	 * Binds Servlet, Filter and ServletContextInitializer beans from the application context to the servlet container.
+	 *
+	 * @link http://docs.spring.io/spring-boot/docs/current/api/index.html?org/springframework/boot/context/web/SpringBootServletInitializer.html
+	 */
+	/*@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(Application.class);
+	}*/
 
-	Message() {
-	}
 
-	public Message(String content) {
-		this.content = content;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public String getContent() {
-		return content;
-	}
 }

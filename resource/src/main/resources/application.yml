@@ -1,8 +1,41 @@
 server:
    port: 9000
-   address: 127.0.0.1
 
-security:
-  oauth2:
-    resource:
-      user-info-uri: http://localhost:9999/uaa/user
+#app:
+#  client:
+#    id: trusted
+#    secret: secret
+#auth:
+#  server:
+#    host: localhost
+#    port: 9999
+
+
+#security:
+#  oauth2:
+#    resource:
+      #user-info-uri: http://localhost:9999/uaa/user
+#     jwt:  # Tells the JWT framework to fetch the public key from the authorization server during startup
+            # Note: The authorization server needs to be running...
+        #key-uri: "http://localhost:9999/uaa/oauth/token_key"
+
+#
+# IMPORTANT NOTICE:
+# You have to replace this keypair and make sure the private key remains private!
+#
+
+config:
+    oauth2:
+        # openssl rsa -in jwt.pem -pubout
+        publicKey: |
+            -----BEGIN PUBLIC KEY-----
+            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAy6mV0BSF0dvFi4aUZysa
+            jpTU9vwTNudqZdBswizvbORU4pFdK9N2dzvVB2uNquXEgMeVxG31K3gUNtFbGKI/
+            m19Hl9xiWTp2OfpshWGgcpllKKWrZsAHzl4V/H18RwonFZnlbB8FtC9rqsdDwnjY
+            6ZplYOmBMlavEi5E5pucEXOvDvMfGWkp8hxq8I8PZECtaB+1C+3cZSo13Mv8GQFF
+            PoeXaBz0Nmc+RB/DWOvBJAUhwbKhKbiFJg1DIyaed+6KV0aMKSWZIXAZDW0bOjyc
+            qJoHXeltfBKBunKbc6O7TKPflYrKOTB7kNsEd/CqvU2NAnJvvtCq4caSSIbnd9Gv
+            JwIDAQAB
+            -----END PUBLIC KEY-----
+
+

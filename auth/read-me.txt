@@ -1,7 +1,7 @@
 ======================================================================
 !!! Get access token using grant_type = password
 POST
-http://localhost:8080/oauth/token?grant_type=password&username=user&password=password
+http://localhost:9999/uaa/oauth/token?grant_type=password&username=user&password=password
 
 {
   "access_token": "065d8789-0771-4108-b42a-bba78a073eca",
@@ -29,7 +29,7 @@ or set header Authorization:Basic Y2xpZW50LWlkOmNsaWVudC1zZWNyZXQ=
 ======================================================================
 !!! Get access token using grant_type = code
 GET
-http://user:password@localhost:9999/uaa/oauth/authorize?response_type=code&client_id=client-id&redirect_uri=http://example.com
+http://user:password@localhost:9999/uaa/oauth/authorize?response_type=code&client_id=trusted&redirect_uri=http://example.com
 
 or set header Authorization:Basic dXNlcjowN2Q0ZTU4OC1jZWJjLTRkNDgtODI1YS1jNmFiYzEwZjJkY2Y=
 
@@ -39,16 +39,17 @@ http://example.com/?code=VP5mQo
 
 !!! Get access token using grant_type = authorization_code
 POST
-http://client-id:client-secret@localhost:9999/uaa/oauth/token?grant_type=authorization_code&client_id=client-id&redirect_uri=http://example.com&code=CfJFMY
+http://trusted:secret@localhost:9999/uaa/oauth/token?grant_type=authorization_code&client_id=trusted&redirect_uri=http://example.com&code=CfJFMY
 
-or set header Authorization:Basic Y2xpZW50LWlkOmNsaWVudC1zZWNyZXQ=
+or set header Authorization:Basic dXNlcjowN2Q0ZTU4OC1jZWJjLTRkNDgtODI1YS1jNmFiYzEwZjJkY2Y=
 
 {
-  "access_token": "6375627c-58c5-47f5-b798-9cc5e3ef206a",
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0Njg4NDYwMDQsInVzZXJfbmFtZSI6InVzZXIiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwianRpIjoiYzFiZDA5NDMtYmRiOC00ZWQ2LWIwYzYtN2U4ZTk2OTA1MDJhIiwiY2xpZW50X2lkIjoidHJ1c3RlZCIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdfQ.j5sU_Zircwdw5SoQ5pfSQOuz28f6Yh039Yt0kcFU0to",
   "token_type": "bearer",
-  "refresh_token": "2ce04e7f-34dd-452e-afe1-849da9fc7d1f",
-  "expires_in": 43199,
-  "scope": "write_cs"
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJ1c2VyIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImF0aSI6ImMxYmQwOTQzLWJkYjgtNGVkNi1iMGM2LTdlOGU5NjkwNTAyYSIsImV4cCI6MTQ3MTQzNzcwNCwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImp0aSI6ImEzYWFlMTlhLTQ1Y2YtNDU4MC04YWY5LTgzZThjYjQyNDU2ZSIsImNsaWVudF9pZCI6InRydXN0ZWQifQ.x4C9m8hfqXTUnKN-oymV0mk3LMmmhL3rVk9op_Ye44A",
+  "expires_in": 299,
+  "scope": "read write",
+  "jti": "c1bd0943-bdb8-4ed6-b0c6-7e8e9690502a"
 }
 
 ======================================================================

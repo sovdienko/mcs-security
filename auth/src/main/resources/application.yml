@@ -2,17 +2,63 @@ server:
   port: 9999
   context-path: /uaa
 
-security:
-  user:
-    password: password
-  oauth2:
-    client:
-      client-id: client-id
-      client-secret: client-secret
-      grant-type: authorization_code, client_credentials, password, refresh_token
-      scope: cs.write, cs.read
-      auto-approve-scopes: ".*"
+#security:
+#  user:
+#    password: password
+#  oauth2:
+#    client:
+#      client-id: trusted
+#      client-secret: secret
+#      grant-type: authorization_code, client_credentials, password, refresh_token
+#      scope: cs.write, cs.read
+#      auto-approve-scopes: ".*"
 
+#
+# IMPORTANT NOTICE:
+# You have to replace this keypair and make sure the private key remains private!
+#
 
-
+config:
+    oauth2:
+        # openssl genrsa -out jwt.pem 2048
+        # openssl rsa -in jwt.pem
+        privateKey: |
+            -----BEGIN RSA PRIVATE KEY-----
+            MIIEowIBAAKCAQEAy6mV0BSF0dvFi4aUZysajpTU9vwTNudqZdBswizvbORU4pFd
+            K9N2dzvVB2uNquXEgMeVxG31K3gUNtFbGKI/m19Hl9xiWTp2OfpshWGgcpllKKWr
+            ZsAHzl4V/H18RwonFZnlbB8FtC9rqsdDwnjY6ZplYOmBMlavEi5E5pucEXOvDvMf
+            GWkp8hxq8I8PZECtaB+1C+3cZSo13Mv8GQFFPoeXaBz0Nmc+RB/DWOvBJAUhwbKh
+            KbiFJg1DIyaed+6KV0aMKSWZIXAZDW0bOjycqJoHXeltfBKBunKbc6O7TKPflYrK
+            OTB7kNsEd/CqvU2NAnJvvtCq4caSSIbnd9GvJwIDAQABAoIBABmNwrVkDdJiD+xM
+            y4wSVXe0ZvBCeqq16JyzxSGr/7KbB6eR863PD5swT69pqFHcGIbMBBescEmu/GJQ
+            bGyv1ulI0DPWvCRT+IeXy0wFDtuyMYYjG1l+GLylA381w4UqWfMU5ztkvRN5q7m2
+            3OKmxRiyfavmQIavZ7IRSiXhOnjZ4KHG5hKYRJqZcgxoF86iG5932qAXh0xcCwgi
+            +Tj/fd82VAvCZHrA3zeOdlwYQw67f3byjoag7oLljQMZ+A5b0MpQ33o6wKRh3bTn
+            e6mJKi9Cz8ZfLF/B9NjsecJK0WlAG3i3FTCjnnWhCU1asWqF+Eq+5Zh9kSYe3MEt
+            jb9uW/kCgYEA8sW+2Fo9kmbrS+4Un+HtnjD+uoOlZ4DCNeBy2Z1xMhZex4GqDZD8
+            RcB3ZcHwyhU0gvMrf4Ie/BhAVkkbAurpmKftzjoMFaHEVmJA9VrxSC2s8APHLXC0
+            mLpTHjd+ftvJ08O6/4Ko5r54TNCN9jkl5WCfv0hqUplJe8Wz4Ouxs6sCgYEA1sJS
+            snrbC/tz+RBry/ru5jJB4eiR8pOLml1bHbBvJBoc0XQ+B/P8DDUm+5lzmPoAVwCG
+            hnR3aP47gnPmtgi+HRw59WiKB4aw5PvEjbKQDCWXybPjtqkCjKqH0rM1R0XPmCtE
+            sjh7OAJQUga2ZUcvoWIm3DDwVX2xdMcuVq6dtnUCgYAn91/stCZwxJq13FLu4z3A
+            DibRQ7zmJi9SuUmPA7lP2pjt1S3On/C39vBxAxWF3ynO6QNfMWeybregvNZCi7O7
+            GuIuUiYNJZ1x7yjse3U/Qa23sZeHpodEoV/vmIktjzdRsmZFjBgMLI0XcDn+r/fK
+            JDcIQX6nbG7JfomXXJXbkwKBgFBvY83ZWeV4/ozQa69wgr3RIP/dvZwfSvA7+v55
+            sIbTCOwiH4GXDlX8Kmedp8AqEqqDVd9SC89VOTC4/DY9vAbnJYYW62u6NNLuwUVZ
+            Fb6W7ezr5WPqlTveOxTdbh0Ntp0Fx6sAoJXvt+mg/fuc1+gX/PoHklxSwX49g8uP
+            hx5pAoGBAI6f3fT95y/IkE0Dnxps737KsIrvnKxSi2hE5GtLLxrl/uVmH6B6g/eX
+            syRLJ9ORsVAdvgMaygI36hp82EqYjKJhxvh30g9TLjyoH8WjUsDCE6pYUwPlMXde
+            p2BFjl8/p4L+uMmQg7tlzuGwqJfx5fSsJi0uFQQFAPAGAUjACd3j
+            -----END RSA PRIVATE KEY-----
+        # openssl rsa -in jwt.pem -pubout
+        publicKey: |
+            -----BEGIN PUBLIC KEY-----
+            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAy6mV0BSF0dvFi4aUZysa
+            jpTU9vwTNudqZdBswizvbORU4pFdK9N2dzvVB2uNquXEgMeVxG31K3gUNtFbGKI/
+            m19Hl9xiWTp2OfpshWGgcpllKKWrZsAHzl4V/H18RwonFZnlbB8FtC9rqsdDwnjY
+            6ZplYOmBMlavEi5E5pucEXOvDvMfGWkp8hxq8I8PZECtaB+1C+3cZSo13Mv8GQFF
+            PoeXaBz0Nmc+RB/DWOvBJAUhwbKhKbiFJg1DIyaed+6KV0aMKSWZIXAZDW0bOjyc
+            qJoHXeltfBKBunKbc6O7TKPflYrKOTB7kNsEd/CqvU2NAnJvvtCq4caSSIbnd9Gv
+            JwIDAQAB
+            -----END PUBLIC KEY-----
 
