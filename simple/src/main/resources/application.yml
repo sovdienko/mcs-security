@@ -1,15 +1,22 @@
+server:
+    port: 8080
+    contextPath: /client
+
+
+config:
+    oauth2:
+        clientID: confidential
+        clientSecret: secret
+        accessTokenUri: http://localhost:9999/uaa/oauth/token
+        userAuthorizationUri: http://localhost:9999/uaa/oauth/authorize
+        resourceURI: http://localhost:9000/api/
+
 security:
-  user:
-    password: password
-  oauth2:
-    client:
-      accessTokenUri: http://localhost:9999/uaa/oauth/token
-      userAuthorizationUri: http://localhost:9999/uaa/oauth/authorize
-      clientId: client-id
-      clientSecret: client-secret
-    resource:
-      userInfoUri: http://localhost:9999/uaa/user
-spring:
-  resources:
-    chain:
-      enabled: true
+  basic:
+    enabled: false
+#  oauth2:
+#    client:
+#      clientID: confidential
+#      clientSecret: secret
+#      accessTokenUri: http://localhost:9999/uaa/oauth/token
+#      userAuthorizationUri: http://localhost:9999/uaa/oauth/authorize

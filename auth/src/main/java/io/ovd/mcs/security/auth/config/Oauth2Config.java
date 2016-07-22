@@ -101,15 +101,15 @@ public class Oauth2Config extends AuthorizationServerConfigurerAdapter
                .authorities("ROLE_TRUSTED_CLIENT")
                .authorizedGrantTypes("client_credentials", "authorization_code", "refresh_token")
                .scopes("read", "write")
-               //.redirectUris("http://localhost:8080/client/")
-
+               .redirectUris("http://localhost:8080/client/")
+               .accessTokenValiditySeconds(30)
                .and()
 
                // Public client where client secret is vulnerable (e.g. mobile apps, browsers)
                .withClient("public") // No secret!
                .authorizedGrantTypes("client_credentials", "implicit")
                .scopes("read")
-               //.redirectUris("http://localhost:8080/client/")
+               .redirectUris("http://localhost:8080/client/")
 
                .and()
 

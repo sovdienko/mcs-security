@@ -48,8 +48,7 @@ public class Oauth2Config extends ResourceServerConfigurerAdapter{
     @Bean
     public ResourceServerTokenServices defaultTokenServices() {
         final DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setTokenEnhancer(tokenEnhancer
-                ());
+        defaultTokenServices.setTokenEnhancer(tokenEnhancer());
         defaultTokenServices.setTokenStore(tokenStore());
         return defaultTokenServices;
     }
