@@ -2,6 +2,22 @@ server:
   port: 9999
   context-path: /uaa
 
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: admin
+    #schema: auth
+  jpa:
+    hibernate:
+      ddl-auto: validate #create-drop  #validate
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: auth
+
+
+
 #security:
 #  user:
 #    password: password
@@ -22,7 +38,7 @@ config:
     oauth2:
         # openssl genrsa -out jwt.pem 2048
         # openssl rsa -in jwt.pem
-        privateKey: |
+        privateKey:
             -----BEGIN RSA PRIVATE KEY-----
             MIIEowIBAAKCAQEAy6mV0BSF0dvFi4aUZysajpTU9vwTNudqZdBswizvbORU4pFd
             K9N2dzvVB2uNquXEgMeVxG31K3gUNtFbGKI/m19Hl9xiWTp2OfpshWGgcpllKKWr
@@ -51,7 +67,7 @@ config:
             p2BFjl8/p4L+uMmQg7tlzuGwqJfx5fSsJi0uFQQFAPAGAUjACd3j
             -----END RSA PRIVATE KEY-----
         # openssl rsa -in jwt.pem -pubout
-        publicKey: |
+        publicKey:
             -----BEGIN PUBLIC KEY-----
             MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAy6mV0BSF0dvFi4aUZysa
             jpTU9vwTNudqZdBswizvbORU4pFdK9N2dzvVB2uNquXEgMeVxG31K3gUNtFbGKI/
@@ -62,3 +78,6 @@ config:
             JwIDAQAB
             -----END PUBLIC KEY-----
 
+logging:
+  level:
+    org.springframework.security.oauth2: debug

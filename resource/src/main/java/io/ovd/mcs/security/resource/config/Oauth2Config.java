@@ -1,5 +1,6 @@
 package io.ovd.mcs.security.resource.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,11 +11,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.apache.log4j.Logger;
 
 /**
  * Created by sergey.ovdienko on 18.07.2016.
@@ -25,7 +28,10 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class Oauth2Config extends ResourceServerConfigurerAdapter{
 
-   // @Value("singin-key:weri9345jdgier9ggndfgjd9g89dfdg")
+    private static final Logger traceUserLogger = Logger.getLogger("traceUserToken");
+
+
+    // @Value("singin-key:weri9345jdgier9ggndfgjd9g89dfdg")
    // private String singingKey;
 
     @Value("${config.oauth2.publicKey}")
@@ -47,10 +53,24 @@ public class Oauth2Config extends ResourceServerConfigurerAdapter{
 
     @Bean
     public ResourceServerTokenServices defaultTokenServices() {
+        traceUserLogger.info(String.format("defaultTokenServices(): %s","777"));
+
         final DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenEnhancer(tokenEnhancer());
         defaultTokenServices.setTokenStore(tokenStore());
+        //defaultTokenServices.setSupportRefreshToken();
+        defaultTokenServices.setSupportRefreshToken(true);
+        defaultTokenServices.setReuseRefreshToken(true);
         return defaultTokenServices;
+
+        /*    For example if you want checking the tokens remotely
+        //
+        RemoteTokenServices tokenServices = new RemoteTokenServices();
+        tokenServices.setClientId(appId);
+        tokenServices.setClientSecret(appSecret);
+        tokenServices.setCheckTokenEndpointUrl("http://" + authServerHost + ":" + authServerPort + "/oauth/check_token");
+        return tokenServices;
+        */
     }
 
     @Bean

@@ -24,11 +24,14 @@ server:
 # IMPORTANT NOTICE:
 # You have to replace this keypair and make sure the private key remains private!
 #
+logging:
+  level:
+    org.springframework.security.oauth2: debug
 
 config:
     oauth2:
         # openssl rsa -in jwt.pem -pubout
-        publicKey: |
+        publicKey:
             -----BEGIN PUBLIC KEY-----
             MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAy6mV0BSF0dvFi4aUZysa
             jpTU9vwTNudqZdBswizvbORU4pFdK9N2dzvVB2uNquXEgMeVxG31K3gUNtFbGKI/

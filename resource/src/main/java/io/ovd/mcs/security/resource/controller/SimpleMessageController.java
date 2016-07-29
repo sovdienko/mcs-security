@@ -18,6 +18,7 @@ public class SimpleMessageController {
 
     @RequestMapping("/")
     public SimpleMessage home(Principal principal) {
+
         return new SimpleMessage(String.format("Hello, %s",principal));
     }
 
