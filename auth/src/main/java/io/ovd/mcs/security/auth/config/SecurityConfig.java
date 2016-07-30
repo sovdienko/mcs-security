@@ -2,17 +2,18 @@ package io.ovd.mcs.security.auth.config;
 
 
 import io.ovd.mcs.security.auth.model.CustomUserDetails;
-import io.ovd.mcs.security.auth.model.Role;
-import io.ovd.mcs.security.auth.model.User;
-import io.ovd.mcs.security.auth.repository.RoleRepository;
-import io.ovd.mcs.security.auth.repository.UserRepository;
+import io.ovd.mcs.security.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 
@@ -23,34 +24,30 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-   /* @Override
-    @Autowired // <-- This is crucial otherwise Spring Boot creates its own
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("user").password("password")
-                .roles("USER")
-                .and()
-                .withUser("admin").password("password")
-                .roles("USER", "ADMIN");
-        }*/
-
-    @Autowired
-    public void authenticationManager(AuthenticationManagerBuilder builder,
-                                      UserRepository userRepository) throws Exception {
-
-
-        if (userRepository.count()==0) {
-            userRepository.save(new User("user", "pass", Arrays.asList(new Role("USER"))));
-            userRepository.save(new User("admin", "admin1", Arrays.asList(new Role("USER"),new Role("ADMIN"))));
-            userRepository.save(new User("test", "test1", Arrays.asList(new Role("ROLE_FUN"),new Role("TEST"))));
-        }
-        builder.userDetailsService(userDetailsService(userRepository));
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 
-    private UserDetailsService userDetailsService(final UserRepository userRepository) {
-        return (username -> {return  new CustomUserDetails(userRepository.findByUsername(username));});
+    private UserDetailsService userDetailsService(final UserService userService) {
+        return (username -> {return  new CustomUserDetails(userService.findByUsername(username));});
+    }
+
+    @Autowired // <-- This is crucial otherwise Spring Boot creates its own
+    protected void configureGlobalSecurity(AuthenticationManagerBuilder authManagerBuilder,
+                                           UserService userService) throws Exception {
+        authManagerBuilder.userDetailsService(userDetailsService(userService));
+        authManagerBuilder.authenticationProvider(authenticationProvider(userService));
+    }
+
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(UserService userService){
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService(userService));
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
     }
 
 

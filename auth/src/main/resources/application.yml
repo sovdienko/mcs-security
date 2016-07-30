@@ -10,7 +10,7 @@ spring:
     #schema: auth
   jpa:
     hibernate:
-      ddl-auto: validate #create-drop  #validate
+      ddl-auto: create-drop  #validate
     show-sql: true
     properties:
       hibernate:

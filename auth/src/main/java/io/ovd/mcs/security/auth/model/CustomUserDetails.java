@@ -1,7 +1,9 @@
 package io.ovd.mcs.security.auth.model;
 
 import io.ovd.mcs.security.auth.util.GlobalUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,13 +19,15 @@ import java.util.stream.Collectors;
 
 public class CustomUserDetails implements UserDetails{
 
+
     private static final long serialVersionUID = 1L;
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
+
     public CustomUserDetails(User user) {
-        this.username = user.getPassword();
+        this.username = user.getUsername();
         this.password = user.getPassword();
         this.authorities = translate(user.getRoles());
     }
