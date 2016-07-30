@@ -1,7 +1,7 @@
 package io.ovd.mcs.security.auth;
 
 import io.ovd.mcs.security.auth.model.Role;
-import io.ovd.mcs.security.auth.service.UserService;
+import io.ovd.mcs.security.auth.service.impl.UserServiceImpl;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +17,7 @@ public class AuthApplication {
 	}
 
 	@Bean
-	public CommandLineRunner init(UserService userService){
+	public CommandLineRunner init(UserServiceImpl userService){
 		return (args) -> {
 			if (userService.userCount() == 0L) {
 				userService.registerUser("user", "pass", Arrays.asList(new Role("USER")));
