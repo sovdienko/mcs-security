@@ -1,0 +1,27 @@
+server:
+  port: 9999
+  context-path: /uaa
+
+logging:
+  level:
+    #org.springframework.security: debug
+    org.springframework.jdbc.core.JdbcTemplate: debug
+    org.springframework.jdbc.core.StatementCreatorUtils: debug
+---
+spring:
+  profiles: h2
+  datasource:
+    platform: h2
+---
+spring:
+  profiles: postgresql
+  datasource:
+    platform: postgresql
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=authj
+    username: postgres
+    password: admin
+    initialize: false
+    continue-on-error: true
+
+
+
