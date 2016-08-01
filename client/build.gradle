@@ -14,7 +14,7 @@ apply plugin: 'java'
 apply plugin: 'spring-boot'
 
 jar {
-	baseName = 'simple'
+	baseName = 'client'
 	version = '0.0.1'
 }
 
@@ -24,7 +24,7 @@ repositories {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.security.oauth:spring-security-oauth2:')
+	compile('org.springframework.security.oauth:spring-security-oauth2')
 }
 
 

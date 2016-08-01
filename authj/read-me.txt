@@ -1,0 +1,71 @@
+======================================================================
+!!! Get access token using grant_type = password
+POST
+http://localhost:9999/uaa/oauth/token?grant_type=password&username=user&password=password
+
+{
+  "access_token": "065d8789-0771-4108-b42a-bba78a073eca",
+  "token_type": "bearer",
+  "refresh_token": "51e7433a-51a8-49a8-b08d-7903cdea08bb",
+  "expires_in": 43199,
+  "scope": "write_cs"
+}
+
+======================================================================
+!!! Get access token using grant_type = client_credentials
+POST
+http://client-id:client-secret@localhost:8080/oauth/token?grant_type=client_credentials
+
+or set header Authorization:Basic Y2xpZW50LWlkOmNsaWVudC1zZWNyZXQ=
+
+
+{
+  "access_token": "c55be20a-2392-471b-ace0-431f9dbb3ea6",
+  "token_type": "bearer",
+  "expires_in": 43044,
+  "scope": "write_cs"
+}
+
+======================================================================
+!!! Get access token using grant_type = code
+GET
+http://user:password@localhost:9999/uaa/oauth/authorize?response_type=code&client_id=trusted&redirect_uri=http://example.com
+
+or set header Authorization:Basic dXNlcjowN2Q0ZTU4OC1jZWJjLTRkNDgtODI1YS1jNmFiYzEwZjJkY2Y=
+
+after choose Approve and push Authorize
+
+http://example.com/?code=VP5mQo
+
+!!! Get access token using grant_type = authorization_code
+POST
+http://trusted:secret@localhost:9999/uaa/oauth/token?grant_type=authorization_code&client_id=trusted&redirect_uri=http://example.com&code=CfJFMY
+
+or set header Authorization:Basic dXNlcjowN2Q0ZTU4OC1jZWJjLTRkNDgtODI1YS1jNmFiYzEwZjJkY2Y=
+
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0Njg4NDYwMDQsInVzZXJfbmFtZSI6InVzZXIiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwianRpIjoiYzFiZDA5NDMtYmRiOC00ZWQ2LWIwYzYtN2U4ZTk2OTA1MDJhIiwiY2xpZW50X2lkIjoidHJ1c3RlZCIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdfQ.j5sU_Zircwdw5SoQ5pfSQOuz28f6Yh039Yt0kcFU0to",
+  "token_type": "bearer",
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJ1c2VyIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImF0aSI6ImMxYmQwOTQzLWJkYjgtNGVkNi1iMGM2LTdlOGU5NjkwNTAyYSIsImV4cCI6MTQ3MTQzNzcwNCwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImp0aSI6ImEzYWFlMTlhLTQ1Y2YtNDU4MC04YWY5LTgzZThjYjQyNDU2ZSIsImNsaWVudF9pZCI6InRydXN0ZWQifQ.x4C9m8hfqXTUnKN-oymV0mk3LMmmhL3rVk9op_Ye44A",
+  "expires_in": 299,
+  "scope": "read write",
+  "jti": "c1bd0943-bdb8-4ed6-b0c6-7e8e9690502a"
+}
+
+======================================================================
+
+======================================================================
+!!! Get renew access token using grant_type = refresh_token
+POST
+http://trusted:secret@localhost:9999/uaa/oauth/token?grant_type=refresh_token&client_id=trusted&client_secret=secret&refresh_token=eyJhbGciOiJSUzI1NiJ9.eyJ1c2VyX25hbWUiOiJ1c2VyIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImF0aSI6IjE1MzcwOTczLTk3NzctNDc0OC04M2RlLWU5Y2YwYWI1NGI0NyIsImV4cCI6MTQ3MTc4NDYzMSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImp0aSI6IjBkZmEzN2Q1LTFlOTctNDBjZi05OWI4LTQyOTcyYzFhZGQ4NSIsImNsaWVudF9pZCI6InRydXN0ZWQifQ.d1VbPjs_1U8C5Ws71ZJGKmGPZcb7vOPuCbwpv-F3PYDnX2SuuOpiY6oJ_CAv_ObaMtCHM5z_6JH_OnWCdMMRBbR6Vi6IehXYtiHu_eVKQ4nqtJNGYlxzjLYgnlksNERjc4cBbY6-EqOe-TCdzIqDMxdV4nvXtP2jRzUwUckvSb7B-zlkBZ5gP9-fZaSQ2WHNbHMQWm9UDnnQgG9llPBLX77I1ai8XRMsvaZZXmkFXl0egm5Ckx8USuSMs9mGwA9sGoiIZou8ff58ezp7xThFF_55V9_39NNWOm_zeY6Y-HzYrMxb48QTMEo3f262PIjy16YduKcxKNDHcRIiEl8dUg
+
+or set header Authorization:Basic dXNlcjowN2Q0ZTU4OC1jZWJjLTRkNDgtODI1YS1jNmFiYzEwZjJkY2Y=
+
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0Njg4NDYwMDQsInVzZXJfbmFtZSI6InVzZXIiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwianRpIjoiYzFiZDA5NDMtYmRiOC00ZWQ2LWIwYzYtN2U4ZTk2OTA1MDJhIiwiY2xpZW50X2lkIjoidHJ1c3RlZCIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdfQ.j5sU_Zircwdw5SoQ5pfSQOuz28f6Yh039Yt0kcFU0to",
+  "token_type": "bearer",
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJ1c2VyIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImF0aSI6ImMxYmQwOTQzLWJkYjgtNGVkNi1iMGM2LTdlOGU5NjkwNTAyYSIsImV4cCI6MTQ3MTQzNzcwNCwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImp0aSI6ImEzYWFlMTlhLTQ1Y2YtNDU4MC04YWY5LTgzZThjYjQyNDU2ZSIsImNsaWVudF9pZCI6InRydXN0ZWQifQ.x4C9m8hfqXTUnKN-oymV0mk3LMmmhL3rVk9op_Ye44A",
+  "expires_in": 299,
+  "scope": "read write",
+  "jti": "c1bd0943-bdb8-4ed6-b0c6-7e8e9690502a"
+}

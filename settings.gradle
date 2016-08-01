@@ -1,1 +1,1 @@
-include ":auth", ":authj", ":resource", ":simple"
+include ":auth", ":authj", ":resource", ":client"
