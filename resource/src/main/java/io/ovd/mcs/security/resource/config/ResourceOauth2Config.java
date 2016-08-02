@@ -26,7 +26,7 @@ import org.apache.log4j.Logger;
 @Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class Oauth2Config extends ResourceServerConfigurerAdapter{
+public class ResourceOauth2Config extends ResourceServerConfigurerAdapter{
 
     private static final Logger traceUserLogger = Logger.getLogger("traceUserToken");
 
@@ -53,12 +53,10 @@ public class Oauth2Config extends ResourceServerConfigurerAdapter{
 
     @Bean
     public ResourceServerTokenServices defaultTokenServices() {
-        traceUserLogger.info(String.format("defaultTokenServices(): %s","777"));
 
         final DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenEnhancer(tokenEnhancer());
         defaultTokenServices.setTokenStore(tokenStore());
-        //defaultTokenServices.setSupportRefreshToken();
         defaultTokenServices.setSupportRefreshToken(true);
         defaultTokenServices.setReuseRefreshToken(true);
         return defaultTokenServices;
@@ -83,8 +81,7 @@ public class Oauth2Config extends ResourceServerConfigurerAdapter{
     @Override
     public void configure(ResourceServerSecurityConfigurer resources)
             throws Exception {
-        resources.tokenServices(defaultTokenServices()).authenticationManager(
-                authenticationManager());
+        resources.tokenServices(defaultTokenServices()).authenticationManager(authenticationManager());
     }
 
     @Override

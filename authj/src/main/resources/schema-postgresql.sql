@@ -24,9 +24,9 @@ create table oauth_client_details (
 );
 
 create table oauth_client_token (
-  token_id VARCHAR(256),
+  token_id VARCHAR(1024),
   token BYTEA,
-  authentication_id VARCHAR(256),
+  authentication_id VARCHAR(1024),
   user_name VARCHAR(256),
   client_id VARCHAR(256)
 );
@@ -51,3 +51,12 @@ create table oauth_code (
   code VARCHAR(256), authentication BYTEA
 );
 
+
+create table oauth_approvals (
+  expiresAt timestamp,
+  status VARCHAR(256),
+  lastModifiedAt timestamp,
+  userId VARCHAR(256),
+  clientId VARCHAR(256),
+  scope VARCHAR(256)
+);

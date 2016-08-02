@@ -26,5 +26,4 @@ public class ClientApplication //extends WebSecurityConfigurerAdapter
 	}
 */
 
-
 }

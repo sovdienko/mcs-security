@@ -5,16 +5,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+import org.springframework.security.oauth2.provider.approval.ApprovalStore;
+import org.springframework.security.oauth2.provider.approval.JdbcApprovalStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
@@ -25,7 +23,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableAuthorizationServer
-public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
+public class ServerOAuth2Config extends AuthorizationServerConfigurerAdapter {
 
     @Value("${config.oauth2.privateKey}")
     private String privateKey;
@@ -40,7 +38,8 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     private AuthenticationManager authManager;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
+
 
     @Bean
     public JwtAccessTokenConverter tokenEnhancer(){
@@ -50,19 +49,20 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
         return tokenEnhancer;
     }
 
-    /* @Bean
-    public JdbcTokenStore tokenStore() {return new JdbcTokenStore(dataSource);}*/
+    @Bean
+    public ApprovalStore approvalStore(){
+        return new JdbcApprovalStore(dataSource);
+    }
+
+
     @Bean
     public JwtTokenStore tokenStore() {
-       return new JwtTokenStore(tokenEnhancer());
-   }
+        JwtTokenStore jwtTokenStore = new JwtTokenStore(tokenEnhancer());
+        jwtTokenStore.setApprovalStore(approvalStore());
+       return jwtTokenStore;
+    }
 
-    /*@Bean
-    public JdbcAuthorizationCodeServices authorizationCodeServices(){
-        return new JdbcAuthorizationCodeServices(dataSource);
-    }*/
-
-    @Override
+     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security
             .passwordEncoder(passwordEncoder)
@@ -72,16 +72,12 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        /*endpoints.authorizationCodeServices(authorizationCodeServices())
-            .authenticationManager(authManager).tokenStore(tokenStore())
-            .approvalStoreDisabled();*/
+
         // @formatter:off
         endpoints
-            // Which authenticationManager should be used for the password grant
-            // If not provided, ResourceOwnerPasswordTokenGranter is not configured
             .authenticationManager(authManager)
-            // Use JwtTokenStore and our jwtAccessTokenConverter
             .tokenStore(tokenStore())
+            .approvalStore(approvalStore())
             .accessTokenConverter(tokenEnhancer());
         // @formatter:on
     }

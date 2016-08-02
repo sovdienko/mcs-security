@@ -4,20 +4,38 @@ server:
 
 logging:
   level:
-    org.springframework.security.oauth2: debug
-
+    #org.springframework.security: debug
+    org.springframework.jdbc.core.JdbcTemplate: debug
+    org.springframework.jdbc.core.StatementCreatorUtils: debug
 
 config:
     oauth2:
-        clientID: confidential
-        clientSecret: secret
-        accessTokenUri: http://localhost:9999/uaa/oauth/token
-        userAuthorizationUri: http://localhost:9999/uaa/oauth/authorize
-        resourceURI: http://localhost:9000/api/
+            # openssl rsa -in jwt.pem -pubout
+      clientID: my-trusted-client
+      clientSecret: secret1
+      accessTokenUri: http://localhost:9999/uaa/oauth/token
+      userAuthorizationUri: http://localhost:9999/uaa/oauth/authorize
+      resourceURI: http://localhost:9000/resource/
+      scope: read,write,trust
+
 
 security:
-  basic:
-    enabled: false
+  #basic:
+    #enabled: false
+  user:
+    password: 2
+   # role: USER
+
+
+spring:
+  datasource:
+    platform: postgresql
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=authj
+    username: postgres
+    password: admin
+    initialize: false
+    continue-on-error: true
+
 #  oauth2:
 #    client:
 #      clientID: confidential
